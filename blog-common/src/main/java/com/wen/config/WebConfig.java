@@ -3,8 +3,10 @@ package com.wen.config;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import lombok.ToString;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -59,8 +61,10 @@ public class WebConfig implements WebMvcConfigurer {
         fastJsonConfig.setSerializerFeatures(SerializerFeature.DisableCircularReferenceDetect); // 禁用循环引用
         fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);// 结果是否格式化，默认为false
         fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");// 配置全局日期格式
-        // 在convert中添加配置信息
-        fastConverter.setFastJsonConfig(fastJsonConfig);
+        SerializeConfig.globalInstance.put(Long.class, ToStringSerializer.instance);
+
+
+        fastConverter.setFastJsonConfig(fastJsonConfig);// 在convert中添加配置信息
         fastConverter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));//设置支持的媒体类型
         fastConverter.setDefaultCharset(StandardCharsets.UTF_8);//设置默认字符集
         HttpMessageConverter<?> converter = fastConverter;

@@ -6,24 +6,31 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wen.pojo.constants.SystemConstants;
 import com.wen.mapper.ArticleMapper;
 import com.wen.mapper.CategoryMapper;
+import com.wen.pojo.dto.ArticleDTO;
 import com.wen.pojo.entity.Article;
+import com.wen.pojo.entity.ArticleTag;
 import com.wen.pojo.entity.Category;
 import com.wen.pojo.vo.ArticleDetailVo;
 import com.wen.pojo.vo.ArticleListVo;
 import com.wen.pojo.vo.HotArticleVo;
 import com.wen.pojo.vo.PageVo;
 import com.wen.service.ArticleService;
+import com.wen.service.ArticleTagService;
 import com.wen.utils.BeanCopyUtils;
 import com.wen.utils.RedisCache;
 import com.wen.utils.ResponseResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
@@ -36,6 +43,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Autowired
     private RedisCache redisCache;
+
+    @Autowired
+    private ArticleTagService articleTagService;
 
     /**
      * 首页文章预览，若传入分类id则查询该分类下的文章
@@ -117,6 +127,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         // 将redis中的浏览量添加
         Integer viewCount = redisCache.getCacheMapValue("Article:viewCount", id.toString());
+        System.out.println(viewCount);
         article.setViewCount(viewCount);
 
         // -----------------------------使用工具类BeanCopyUtils封装到VO-----------------------------
@@ -128,6 +139,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ResponseResult updateViewCount(Long id) {
         // 更新浏览量加一
         redisCache.incrementCacheMapValue("Article:viewCount", id.toString(), 1);
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    @Transactional // @Transactional：该类中的方法会被事务管理
+    public ResponseResult addArticle(@RequestBody ArticleDTO articleDTO) {
+        // 添加到博客表
+        Article article = BeanCopyUtils.copyBean(articleDTO, Article.class);
+        save(article);
+
+        // 添加 博客与标签的关联关系
+        List<ArticleTag> articleTags = articleDTO.getTags().stream()
+                .map(tagId -> new ArticleTag(article.getId(), tagId))
+                .collect(Collectors.toList());
+        articleTagService.saveBatch(articleTags);
+
         return ResponseResult.okResult();
     }
 

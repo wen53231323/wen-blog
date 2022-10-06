@@ -15,4 +15,6 @@ public class CategoryVo {
     private Long id;
     // 文章分类名称
     private String name;
+    // 文章分类描述
+    private String description;
 }

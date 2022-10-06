@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface ArticleMapper extends BaseMapper<Article> {
 
     // 根据文章id更新文章浏览量
-    @Update("update artacle set view_count = #{ ViewCount } where id = #{ id }")
+    @Update("update article set view_count = #{ ViewCount } where id = #{ id }")
     void updateViewCountById(@Param("id") Long id, @Param("ViewCount") Integer ViewCount);
 }

@@ -2,6 +2,7 @@ package com.wen.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wen.pojo.dto.ArticleDTO;
 import com.wen.pojo.entity.Article;
 import com.wen.utils.ResponseResult;
 
@@ -17,4 +18,7 @@ public interface ArticleService extends IService<Article> {
 
     // 更新浏览量时，更新redis中的数据
     ResponseResult updateViewCount(Long id);
+
+    // 添加文章
+    ResponseResult addArticle(ArticleDTO articleDTO);
 }

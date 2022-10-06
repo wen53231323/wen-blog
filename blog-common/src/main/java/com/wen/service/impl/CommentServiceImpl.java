@@ -134,7 +134,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             throw new SystemException(AppHttpCodeEnum.CONTENT_NOT_NULL);
         }
 
-        // TODO 如果CommentId或ToUserId为null，则说明是一级评论，反之是回复
+        // TODO 如果commentId或toUserId为null，则说明是一级评论，反之是回复
         if (Objects.isNull(commentDTO.getCommentId()) | Objects.isNull(commentDTO.getToUserId())) {
             // 向评论表插入，文章id和评论内容
             commentMapper.commentInsert(commentDTO.getArticleId(), commentDTO.getContent(), userId, userId);

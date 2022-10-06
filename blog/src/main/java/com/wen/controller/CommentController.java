@@ -16,8 +16,8 @@ public class CommentController {
     private CommentService commentService;
 
     @ApiOperation(value = "一级评论或二级回复展示", notes = "根据文章id查询文章评论列表")
-    @GetMapping("/commentList/{articleId}/{pageNum}/{pageSize}")
-    public ResponseResult commentList(@PathVariable Long articleId,@PathVariable Integer pageNum,@PathVariable Integer pageSize) {
+    @GetMapping("/commentList/{pageNum}/{pageSize}/{articleId}")
+    public ResponseResult commentList(@PathVariable Integer pageNum,@PathVariable Integer pageSize,@PathVariable Long articleId) {
         ResponseResult result = commentService.getCommentList(articleId, pageNum, pageSize);
         return result;
     }

@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * (Article)表实体类
@@ -36,6 +37,10 @@ public class Article {
     // 文章所属分类名（@TableField(exist = false)表示表中没有这个字段，防止报错）
     @TableField(exist = false)
     private String categoryName;
+    // 文章标签
+    @TableField(exist = false)
+    private List<Long> tags;
+
     //文章标题
     private String title;
     //文章摘要
@@ -56,6 +61,7 @@ public class Article {
     private Long updateBy;
     //文章更新时间
     private Date updateTime;
+
     //文章是否允许评论（0不允许评论，1允许评论）
     private String isComment;
     //文章状态（0已发布，1草稿）

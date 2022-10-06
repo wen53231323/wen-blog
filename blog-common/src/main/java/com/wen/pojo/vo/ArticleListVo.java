@@ -25,4 +25,6 @@ public class ArticleListVo {
     private String thumbnail;
     // 文章创建时间
     private Date createTime;
+    //访问量
+    private Integer viewCount;
 }

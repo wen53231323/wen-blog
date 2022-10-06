@@ -36,8 +36,11 @@ public class SecurityUtils {
         return userid;
     }
 
+    /**
+     * 判断是否为管理员，如果ID为1则说明为管理员
+     */
     public static Boolean isAdmin() {
         Long id = getLoginUser().getUser().getId();
-        return id != null && 1L == id;
+        return id != null && id.equals(1L);
     }
 }

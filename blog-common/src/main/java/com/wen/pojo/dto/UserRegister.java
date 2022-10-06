@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 public class UserRegister {
     //用户账号
     private String account;
-    //用户密码
-    private String password;
     //用户昵称
     private String nickName;
     //用户邮箱
     private String email;
+    //用户密码
+    private String password;
 }

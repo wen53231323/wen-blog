@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
      * （2）根据用户id查询用户信息
      * （3）返回用户信息
      */
-
     @Override
     public ResponseResult getUserInfo() {
         // 根据token解析用户id
@@ -110,8 +109,11 @@ public class UserServiceImpl implements UserService {
      * @return 存在true，不存在false
      */
     public boolean userAccountExist(String account) {
-        int i = userMapper.userAccountExist(account);
-        return i > 0;
+        Integer i = userMapper.userAccountExist(account);
+        if (i == null) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -121,8 +123,11 @@ public class UserServiceImpl implements UserService {
      * @return 存在true，不存在false
      */
     public boolean userEmailExist(String email) {
-        int i = userMapper.userEmailExist(email);
-        return i > 0;
+        Integer i = userMapper.userEmailExist(email);
+        if (i == null) {
+            return false;
+        }
+        return true;
     }
 
 }

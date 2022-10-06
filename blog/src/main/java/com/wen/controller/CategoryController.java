@@ -23,7 +23,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @ApiOperation(value = "文章分类", notes = "获取文章分类列表（首页文章分类展示）")
-    @GetMapping("/getCategory")
+    @GetMapping("/getCategoryList")
     public ResponseResult getCategoryList(){
         ResponseResult  result = categoryService.getCategoryList();
         return result;

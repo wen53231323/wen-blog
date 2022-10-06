@@ -4,6 +4,7 @@ import com.wen.mapper.ArticleMapper;
 import com.wen.utils.RedisCache;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
@@ -43,6 +44,7 @@ public class ViewCountCrontab {
             // 更新到数据库
             articleMapper.updateViewCountById(Long.valueOf(entry.getKey()),entry.getValue());
         }
-        log.info("定时任务执行介绍...");
+        log.info("定时任务执行结束...");
     }
+
 }
