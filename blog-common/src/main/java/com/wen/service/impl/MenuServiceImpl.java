@@ -2,14 +2,23 @@ package com.wen.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wen.mapper.MenuMapper;
 import com.wen.pojo.constants.SystemConstants;
+import com.wen.pojo.entity.Article;
+import com.wen.pojo.entity.ArticleTag;
 import com.wen.pojo.entity.Menu;
+import com.wen.pojo.vo.ArticleListVo;
+import com.wen.pojo.vo.ArticleVo;
+import com.wen.pojo.vo.PageVo;
 import com.wen.service.MenuService;
+import com.wen.utils.BeanCopyUtils;
+import com.wen.utils.ResponseResult;
 import com.wen.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,5 +99,36 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return childrenList;
     }
 
+    @Override
+    public List<Menu> selectMenuList(String menuName, String status) {
+        // （1）查询文章表中已发布的文章
+        LambdaQueryWrapper<Menu> lqw = new LambdaQueryWrapper<>();
+        lqw.like(StringUtils.hasText(menuName), Menu::getMenuName, menuName);// 根据文章标题模糊查询
+        lqw.like(StringUtils.hasText(status), Menu::getStatus, status);// 根据文章摘要模糊查询
+        lqw.orderByAsc(Menu::getParentId, Menu::getOrderNum);// 根据parent_id和order_num排序（由低到高）
+        List<Menu> menus = menuMapper.selectList(lqw);// 获取全部数据列表
+
+        //（2）使用工具类BeanCopyUtils封装到ArticleListVo
+
+        return menus;
+    }
+
+    @Override
+    public ResponseResult getInfo(Long id) {
+        Menu menu = menuMapper.selectById(id);
+        return ResponseResult.okResult(menu);
+    }
+
+    @Override
+    public ResponseResult updateMenu(Menu menu) {
+        menuMapper.updateById(menu);
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public List<Long> selectMenuListByRoleId(Long roleId) {
+        List<Long> longs = getBaseMapper().selectMenuListByRoleId(roleId);
+        return longs;
+    }
 }
 

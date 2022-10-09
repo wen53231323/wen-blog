@@ -19,10 +19,14 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper extends BaseMapper<User> {
     // 查询用户账号是否存在（返回值大于0存在）
     @Select("select 1 from user where account = #{account} limit 1")
-    Integer userAccountExist(@Param("account") String account);
+    Object userAccountExist(@Param("account") String account);
+
+    // 查询用户手机号是否存在（返回值大于0存在）
+    @Select("select 1 from user where phone = #{phone} limit 1")
+    Object userPhoneExist(@Param("phone") String phone);
 
     // 查询用户邮箱是否存在（返回值大于0存在）
     @Select("select 1 from user where email = #{email} limit 1")
-    Integer userEmailExist(@Param("email") String email);
+    Object userEmailExist(@Param("email") String email);
 }
 

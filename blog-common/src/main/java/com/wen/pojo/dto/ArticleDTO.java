@@ -20,6 +20,8 @@ import java.util.List;
 // 代表全参构造
 @AllArgsConstructor
 public class ArticleDTO {
+    // 文章id
+    private Long id;
     //文章分类id
     private Long categoryId;
     // 文章所属分类名

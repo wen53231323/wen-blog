@@ -54,10 +54,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         // TODO 根据文章id，查询对应文章的一级评论（评论表），并按点赞数据降序分页
         LambdaQueryWrapper<Comment> lqw = new LambdaQueryWrapper<>();
         lqw.eq(Comment::getBelongId, articleId);
-        // 按照点赞量降序排序（由高到低）
-        lqw.orderByDesc(Comment::getLikeNum);
-        // 分页查询
-        Page<Comment> page = new Page(pageNum, pageSize);
+        lqw.orderByDesc(Comment::getLikeNum);// 按照点赞量降序排序（由高到低）
+        Page<Comment> page = new Page<>(pageNum, pageSize);// 分页查询
         commentMapper.selectPage(page, lqw);// 添加查询条件
         List<Comment> records = page.getRecords();// 获取全部数据列表
 

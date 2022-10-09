@@ -21,4 +21,13 @@ public interface ArticleService extends IService<Article> {
 
     // 添加文章
     ResponseResult addArticle(ArticleDTO articleDTO);
+
+    // 后台-分页查询文章列表，根据标题和摘要模糊查询
+    ResponseResult selectArticlePage(Integer pageNum, Integer pageSize, String title, String summary);
+
+    // 后台-根据文章id查询文章详情
+    ResponseResult getInfo(Long id);
+
+    // 后台-根据文章ID修改文章
+    ResponseResult updateArticleById(ArticleDTO articleDTO);
 }

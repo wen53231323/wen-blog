@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+
 // 代表get、set、toString、equals、hashCode等操作
 @Data
 // 代表无参构造
@@ -14,7 +16,11 @@ import java.util.Collection;
 // 代表全参构造
 @AllArgsConstructor
 public class LoginUser implements UserDetails {
+    // 用户信息
     private User user;
+
+    // 权限列表
+    private List<String> permissions;
 
     // 返回权限信息
     @Override

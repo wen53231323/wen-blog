@@ -1,6 +1,7 @@
 package com.wen.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wen.pojo.dto.TagListDTO;
 import com.wen.pojo.entity.Tag;
 import com.wen.utils.ResponseResult;
 
@@ -13,5 +14,7 @@ import com.wen.utils.ResponseResult;
 public interface TagService extends IService<Tag> {
 
     ResponseResult getListAllTag();
+
+    ResponseResult pageTagList(Integer pageNum, Integer pageSize, TagListDTO tagListDTO);
 }
 

@@ -33,6 +33,7 @@ public class LoginController {
         ResponseResult login = loginService.login(loginUserDTO);
         return login;
     }
+
     @ApiOperation(value = "登出", notes = "退出登录接口")
     @PostMapping("/logout")
     public ResponseResult logout() {

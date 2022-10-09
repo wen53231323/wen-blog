@@ -27,5 +27,8 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     // 获取当前用户所具有的权限Menu
     List<Menu> selectRouterMenuTreeByUserId(Long userId);
+
+    // 根据角色id查询权限列表
+    List<Long> selectMenuListByRoleId(Long roleId);
 }
 

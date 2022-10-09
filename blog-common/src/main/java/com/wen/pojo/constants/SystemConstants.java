@@ -2,6 +2,17 @@ package com.wen.pojo.constants;
 
 // 系统常量
 public class SystemConstants {
+
+    /**
+     * 是管理员
+     * */
+    public static final String IS_ADMIN = "0";
+
+    /**
+     * 不是管理员
+     * */
+    public static final String NO_ADMIN = "1";
+
     /**
      * 文章是草稿
      */

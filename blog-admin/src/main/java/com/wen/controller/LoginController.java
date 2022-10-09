@@ -56,7 +56,7 @@ public class LoginController {
     }
 
     @GetMapping("/getInfo")
-    public ResponseResult<AdminUserInfoVo> getInfo() {
+    public ResponseResult getInfo() {
         //（1）获取当前登录的用户
         LoginUser loginUser = SecurityUtils.getLoginUser();// 获取登录用户
 
@@ -77,7 +77,7 @@ public class LoginController {
     }
 
     @GetMapping("/getRouters")
-    public ResponseResult<Menu> getRouters() {
+    public ResponseResult getRouters() {
         // 获取用户ID
         Long userId = SecurityUtils.getUserId();
 

@@ -1,7 +1,9 @@
 package com.wen.utils;
 
 
+import com.wen.exception.SystemException;
 import com.wen.pojo.entity.LoginUser;
+import com.wen.pojo.enums.AppHttpCodeEnum;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

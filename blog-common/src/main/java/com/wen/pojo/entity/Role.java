@@ -19,9 +19,9 @@ import java.util.Date;
 @Data
 // 代表无参构造
 @NoArgsConstructor
-@TableName("role")
 // 代表全参构造
 @AllArgsConstructor
+@TableName("role")
 public class Role{
     //角色ID    
     private Long id;

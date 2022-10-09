@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * (Tag)表实体类
+ * (UserFollow)表实体类
  *
  * @author makejava
- * @since 2022-10-06 15:49:23
+ * @since 2022-10-07 10:39:17
  */
 // @SuppressWarnings注解是jse提供的注解，屏蔽无关紧要的警告。
 @SuppressWarnings("serial")
@@ -22,25 +22,17 @@ import java.util.Date;
 // 代表全参构造
 @AllArgsConstructor
 //MyBatis-Puls提供的注解，设置实体类对应的表名
-@TableName("tag")
-public class Tag {
-    //标签ID    
+@TableName("user_follow")
+public class UserFollow {
+    //主键ID    
     private Long id;
-    //标签名称    
-    private String name;
-    // 标签备注
-    private String remark;
-    //标签创建者
-    private Long createBy;
-    //标签创建时间
+    //用户ID    
+    private Long userIdA;
+    //被关注ID    
+    private Long userIdB;
+    //标记（1被关注、2拉黑）
+    private String followedSign;
+    //创建时间    
     private Date createTime;
-    //标签更新者
-    private Long updateBy;
-    //标签更新时间
-    private Date updateTime;
-    //标签状态（0正常、1禁用）
-    private String status;
-    //标签删除标志（0未删除，1已删除）
-    private Integer delFlag;
 }
 

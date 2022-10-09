@@ -77,7 +77,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Override
     public PageVo selectCategoryPage(Category category, Integer pageNum, Integer pageSize) {
-        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtils.hasText(category.getName()),Category::getName, category.getName());
         queryWrapper.eq(Objects.nonNull(category.getStatus()),Category::getStatus, category.getStatus());
         Page<Category> page = new Page<>();

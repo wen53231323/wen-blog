@@ -4,6 +4,7 @@ package com.wen.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
 import com.wen.pojo.entity.Category;
+import com.wen.pojo.entity.User;
 import com.wen.pojo.enums.AppHttpCodeEnum;
 import com.wen.pojo.vo.CategoryVo;
 import com.wen.pojo.vo.ExcelCategoryVo;
@@ -27,53 +28,58 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    // 发布文章时获取分类列表
+    @ApiOperation(value = "获取分类", notes = "发布文章时获取所有分类列表")
     @GetMapping("/category/listAllCategory")
+    @PreAuthorize("@ps.hasPermission('content:category:query')")// 在SPEL表达式中使用 @ex相当于获取容器中bean的名字的对象，然后再调用这个对象的hasAuthority方法
     public ResponseResult getListAllCategory() {
         ResponseResult allCategory = categoryService.getAllCategory();
         return allCategory;
     }
 
-    // 根据id修改分类
-    @PutMapping("/category")
-    public ResponseResult edit(@RequestBody Category category) {
-        categoryService.updateById(category);
-        return ResponseResult.okResult();
-    }
-
-    // 根据id删除分类
-    @DeleteMapping(value = "/{id}")
-    public ResponseResult remove(@PathVariable(value = "id") Long id) {
-        categoryService.removeById(id);
-        return ResponseResult.okResult();
-    }
-
-    // 根据id获取分类信息
-    @GetMapping(value = "/category/{id}")
-    public ResponseResult getInfo(@PathVariable(value = "id") Long id) {
-        Category category = categoryService.getById(id);
-        return ResponseResult.okResult(category);
-    }
-
-    // 添加分类信息
-    @PostMapping("/category")
-    public ResponseResult add(@RequestBody Category category) {
-        categoryService.save(category);
-        return ResponseResult.okResult();
-    }
-
-    /**
-     * 获取用户列表
-     */
+    @ApiOperation(value = "分类列表", notes = "获取分类列表")
     @GetMapping("/category/list")
     public ResponseResult list(Category category, Integer pageNum, Integer pageSize) {
         PageVo pageVo = categoryService.selectCategoryPage(category, pageNum, pageSize);
         return ResponseResult.okResult(pageVo);
     }
 
+    @ApiOperation(value = "添加分类", notes = "添加分类信息")
+    @PostMapping("/category")
+    public ResponseResult add(@RequestBody Category category) {
+        categoryService.save(category);
+        return ResponseResult.okResult();
+    }
 
+    @ApiOperation(value = "删除分类", notes = "根据id删除分类")
+    @DeleteMapping("/category/{id}")
+    public ResponseResult remove(@PathVariable("id") Long id) {
+        categoryService.removeById(id);
+        return ResponseResult.okResult();
+    }
+
+    @ApiOperation(value = "分类详情", notes = "根据id获取分类详情信息")
+    @GetMapping("/category/{id}")
+    public ResponseResult getInfo(@PathVariable("id") Long id) {
+        Category category = categoryService.getById(id);
+        return ResponseResult.okResult(category);
+    }
+
+    @ApiOperation(value = "分类修改", notes = "根据id修改分类")
+    @PutMapping("/category")
+    public ResponseResult edit(@RequestBody Category category) {
+        categoryService.updateById(category);
+        return ResponseResult.okResult();
+    }
+
+    @ApiOperation(value = "分类状态修改", notes = "分类状态修改")
+    @PutMapping("/category/changeStatus")
+    public ResponseResult changeStatus(@RequestBody Category category) {
+        categoryService.updateById(category);
+        return ResponseResult.okResult();
+    }
 
     @ApiOperation(value = "导出Excel", notes = "导出分类到Excel")
+    // 在SPEL表达式中使用 @ex相当于获取容器中bean的名字的对象，然后再调用这个对象的hasAuthority方法
     @PreAuthorize("@ps.hasPermission('content:category:export')")
     @GetMapping("/category/export")
     public void export(HttpServletResponse response) {
